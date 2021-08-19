@@ -1,0 +1,65 @@
+body{
+    background-color: rgb(69, 63, 70);
+    text-align: center;
+}
+
+
+h1 {
+    font-size: 4rem;
+    color: ghostwhite;
+}
+h2 {
+    margin: 3rem auto;
+    font-size: 2.5rem;
+    color: ghostwhite;
+
+}
+
+
+.grid {
+    background-color: rgb(87, 128, 131);
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem auto;
+    padding: 1rem;
+    width: fit-content;
+    border: gainsboro 0.3rem solid; 
+}
+
+
+#row{
+    margin: 0 auto;
+    padding: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.innerRow{
+    width: 10rem;
+    height: 10rem;
+    font-size: 10rem;
+    margin: 0.5rem;
+    border: 0.1rem solid rgb(74, 226, 94);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#gameStatus{
+    font-size: 2rem;
+    color: ghostwhite;
+    
+}
+#gameStatus button{
+    display: block;
+    margin: 30px auto;
+}
+
+.rowO{
+    color: #f0f;
+    text-shadow: yellow 2px 2px;
+}
+.rowX{
+    color: yellow;
+    text-shadow: #f0f 2px 2px;
+}
