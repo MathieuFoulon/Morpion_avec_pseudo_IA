@@ -206,7 +206,7 @@ const app = {
             }
         }
 
-        for (let cursor = 0; cursor < 3; cursor++) { // on va boucler dans cellsList pour trouver les cases occupées par X ou O, si une case est vide a côté ou entre, O joue. "cursor" sera l'index à boucler : row pour checker sur les 3 lignes horizontales, col pour checker les trois colonnes
+        for (let cursor = 0; cursor < 3; cursor++) { // on va boucler dans cellsList pour trouver les cases occupées par  O, si une case est vide a côté ou entre, O joue. "cursor" sera l'index à boucler : row pour checker sur les 3 lignes horizontales, col pour checker les trois colonnes
 
             //chaque if fonctionne de la même manière : on check si 2 cases ont un X ou un O, et si une est vide : si elle est vide, on lui coller un O, pareil en html, et on stoppe la fonction pour que ce soit au tour de X;
 
@@ -253,56 +253,6 @@ const app = {
 
                 return;
             }
-
-
-
-
-            //POUR BLOQUER X DANS SON ELAN
-            //horizontal fin vide
-            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "") {
-                app.cellsList[cursor][2] = "O"; // on valide donc la case en lui inscrivant "O"
-                app.writeDivAndArray(cursor, 2); // on inscrit O dans le html
-
-                return; // on stoppe
-            }
-            //horizontal milieu vide
-            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][1] == "") {
-                app.cellsList[cursor][1] = "O";
-                app.writeDivAndArray(cursor, 1);
-
-                return;
-            }
-            //horizontal début vide
-            if (app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][0] == "") {
-                app.cellsList[cursor][0] = "O";
-                app.writeDivAndArray(cursor, 0);
-
-                return;
-            }
-            //vertical fin vide
-            if (app.cellsList[0][cursor] == "X" && app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "") {
-                app.cellsList[2][cursor] = "O";
-                app.writeDivAndArray(2, cursor);
-
-                return;
-            }
-            //horizontal milieu vide
-            if (app.cellsList[0][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[1][cursor] == "") {
-                app.cellsList[1][cursor] = "O";
-                app.writeDivAndArray(1, cursor);
-
-                return;
-            }
-            //horizontal début vide
-            if (app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[0][cursor] == "") {
-                app.cellsList[0][cursor] = "O";
-                app.writeDivAndArray(0, cursor);
-
-                return;
-            }
-
-
-
         }
         //Plus besoin de la boucle : on check les diagonales
 
@@ -363,6 +313,58 @@ const app = {
 
             return;
         }
+
+
+
+        for (let cursor = 0; cursor < 3; cursor++) { // on va boucler dans cellsList pour trouver les cases occupées par  X, si une case est vide a côté ou entre, O joue. "cursor" sera l'index à boucler : row pour checker sur les 3 lignes horizontales, col pour checker les trois colonnes
+            //POUR BLOQUER X DANS SON ELAN
+            //horizontal fin vide
+            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "") {
+                app.cellsList[cursor][2] = "O"; // on valide donc la case en lui inscrivant "O"
+                app.writeDivAndArray(cursor, 2); // on inscrit O dans le html
+
+                return; // on stoppe
+            }
+            //horizontal milieu vide
+            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][1] == "") {
+                app.cellsList[cursor][1] = "O";
+                app.writeDivAndArray(cursor, 1);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][0] == "") {
+                app.cellsList[cursor][0] = "O";
+                app.writeDivAndArray(cursor, 0);
+
+                return;
+            }
+            //vertical fin vide
+            if (app.cellsList[0][cursor] == "X" && app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "") {
+                app.cellsList[2][cursor] = "O";
+                app.writeDivAndArray(2, cursor);
+
+                return;
+            }
+            //horizontal milieu vide
+            if (app.cellsList[0][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[1][cursor] == "") {
+                app.cellsList[1][cursor] = "O";
+                app.writeDivAndArray(1, cursor);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[0][cursor] == "") {
+                app.cellsList[0][cursor] = "O";
+                app.writeDivAndArray(0, cursor);
+
+                return;
+            }
+
+
+
+        }
+
 
 
         // ON BLOQUE X
