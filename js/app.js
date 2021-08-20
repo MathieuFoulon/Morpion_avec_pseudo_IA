@@ -59,7 +59,7 @@ const app = {
 
 
             //!ALLEZ VOIR LA FONCTION CELLFILTER PLUS BAS TOUT DE SUITE PUIS REVENEZ ICI
-            app.cellFilter(app.caseChoisie); // on appelle la fonction app.cellFiltrer avec en argument app.caseChoisie
+            let cellReturned = app.cellFilter(app.caseChoisie); // on appelle la fonction app.cellFiltrer avec en argument app.caseChoisie
 
             let isAlmostOneEmpty = false; //on initialise un booléen à false, on le passera à true si notre une case vide est trouvée
 
@@ -72,8 +72,12 @@ const app = {
                 }
             }
 
-            if (isAlmostOneEmpty) { // si il y a au moins une case vide...
+            if (isAlmostOneEmpty) { // si il y a au moins une case vide ce sera à l'IA de joué, sinon c'est que le jeu est fini...
+
+                //! ALLEZ VOIR LA FONCTION IATURN PLUS BAS TOUT DE SUITE PUIS REVENEZ ICI
                 app.iaTurn(); // c'est au tour de l'IA de jouer ! si il n'y en a pas, l'IA ne peut pas jouer = c'est à dire en cas de victoire de X, ou de match nul
+
+
             }
 
             app.nombreCase -= 2; // une case a été cliquée et remplie et l'IA a joué, le nombre de cases vides disponibles doit donc diminuer de 2.
@@ -81,15 +85,15 @@ const app = {
             // Le tableau cellsList a reçu une ou des valeurs, il faut vérifier si la partie est finie ou non !
             //! ALLER VOIR LA FONCTION CHECKCELL PLUS BAS TOUT DE SUITE PUIS REVENEZ ICI
             let isOver = app.checkCell(); // isOver contient la valeur de retour de la fonction checkCell() = "X", "O", ou false. 
-
-            if (isOver === "X") { // si le "vrai" joueur a gagné
+            console.log(isOver);
+            if (isOver == "X") { // si le "vrai" joueur a gagné
 
                 app.gameStatusElement.textContent = "FINI ! joueur " + isOver + " a gagné en " + app.turn + " tours"; // le contenu de la div gameStatus est redéfini, on supprime tout ce qu'il y a dedans et on affiche ce message ( on a supprimé le pElement par la même occasion)
 
                 app.createButton(); // on appelle cette fonction qui va créer un bouton et son addEventListener.
 
-            } else if (isOver === "O") { // si l'IA a gagné
-                app.gameStatusElement.textContent = "FINI ! joueur " + isOver + " a gagné en " + (app.turn + 1 )+ " tours"; // le contenu de la div gameStatus est redéfini, on supprime tout ce qu'il y a dedans et on affiche ce message ( on a supprimé le pElement par la même occasion) 
+            } else if (isOver == "O") { // si l'IA a gagné
+                app.gameStatusElement.textContent = "FINI ! joueur " + isOver + " a gagné en " + (app.turn + 1) + " tours"; // le contenu de la div gameStatus est redéfini, on supprime tout ce qu'il y a dedans et on affiche ce message ( on a supprimé le pElement par la même occasion) 
                 //Vous noterez la différence : si c'est l'IA qui joue, on ajoute 1 au tour à afficher, simplement parce que l'IA est censé jouer après le joueur;
 
                 app.createButton(); // on appelle cette fonction qui va créer un bouton et son addEventListener.
@@ -136,22 +140,23 @@ const app = {
 
             // petit point info : remarquez la manière dont le if est écrit. Si il n'y a pas de else et qu'elle ne contient qu'une seule ligne d'instruction, vous pouvez l'écrire comme ça ( j'ai bien dit instruction, pas condition !)
 
-            if ((app.cellsList[cursor][0] === app.cellsList[cursor][1] && app.cellsList[cursor][0] === app.cellsList[cursor][2]) && app.cellsList[cursor][0] === "X") return "X"; // on verifie l'horizontal, si X gagne, on renvoie "X"
 
-            if ((app.cellsList[cursor][0] === app.cellsList[cursor][1] && app.cellsList[cursor][0] === app.cellsList[cursor][2]) && app.cellsList[cursor][0] === "O") return "O"; // on verifie l'horizontal, si O gagne, on renvoie "O"
+            if ((app.cellsList[cursor][0] == app.cellsList[cursor][1] && app.cellsList[cursor][0] == app.cellsList[cursor][2]) && app.cellsList[cursor][0] == "X") return "X"; // on verifie l'horizontal, si X gagne, on renvoie "X"
 
-            if ((app.cellsList[0][cursor] === app.cellsList[1][cursor] && app.cellsList[0][cursor] === app.cellsList[2][cursor]) && app.cellsList[0][cursor] === "X") return "X"; // on vérifie le vertical, si X gagne, on renvoie "X"
+            if ((app.cellsList[cursor][0] == app.cellsList[cursor][1] && app.cellsList[cursor][0] == app.cellsList[cursor][2]) && app.cellsList[cursor][0] == "O") return "O"; // on verifie l'horizontal, si O gagne, on renvoie "O"
 
-            if ((app.cellsList[0][cursor] === app.cellsList[1][cursor] && app.cellsList[0][cursor] === app.cellsList[2][cursor]) && app.cellsList[0][cursor] === "O") return "O"; // on vérifie le vertical, si O gagne, on renvoie "O"
+            if ((app.cellsList[0][cursor] == app.cellsList[1][cursor] && app.cellsList[0][cursor] == app.cellsList[2][cursor]) && app.cellsList[0][cursor] == "X") return "X"; // on vérifie le vertical, si X gagne, on renvoie "X"
+
+            if ((app.cellsList[0][cursor] == app.cellsList[1][cursor] && app.cellsList[0][cursor] == app.cellsList[2][cursor]) && app.cellsList[0][cursor] == "O") return "O"; // on vérifie le vertical, si O gagne, on renvoie "O"
         }
 
-        if ((app.cellsList[0][0] === app.cellsList[1][1] && app.cellsList[0][0] === app.cellsList[2][2]) && app.cellsList[0][0] === "X") return "X"; // on vérifie une diagonale, si X gagne, on renvoie "X"
+        if ((app.cellsList[0][0] == app.cellsList[1][1] && app.cellsList[0][0] == app.cellsList[2][2]) && app.cellsList[0][0] == "X") return "X"; // on vérifie une diagonale, si X gagne, on renvoie "X"
 
-        if ((app.cellsList[0][0] === app.cellsList[1][1] && app.cellsList[0][0] === app.cellsList[2][2]) && app.cellsList[0][0] === "O") return "O"; // on vérifie une diagonale, si O gagne, on renvoie "O"
+        if ((app.cellsList[0][0] == app.cellsList[1][1] && app.cellsList[0][0] == app.cellsList[2][2]) && app.cellsList[0][0] == "O") return "O"; // on vérifie une diagonale, si O gagne, on renvoie "O"
 
-        if ((app.cellsList[2][0] === app.cellsList[1][1] && app.cellsList[2][0] === app.cellsList[0][2]) && app.cellsList[2][0] === "X") return "X"; // on vérifie l'autre diagonale, si X gagne, on renvoie "X"
+        if ((app.cellsList[2][0] == app.cellsList[1][1] && app.cellsList[2][0] == app.cellsList[0][2]) && app.cellsList[2][0] == "X") return "X"; // on vérifie l'autre diagonale, si X gagne, on renvoie "X"
 
-        if ((app.cellsList[2][0] === app.cellsList[1][1] && app.cellsList[2][0] === app.cellsList[0][2]) && app.cellsList[2][0] === "O") return "O"; // on vérifie l'autre diagonale, si O gagne, on renvoie "O"
+        if ((app.cellsList[2][0] == app.cellsList[1][1] && app.cellsList[2][0] == app.cellsList[0][2]) && app.cellsList[2][0] == "O") return "O"; // on vérifie l'autre diagonale, si O gagne, on renvoie "O"
 
 
 
@@ -167,18 +172,21 @@ const app = {
         //parseInt nous servira à transformer le "2" et le "0" en nombre 2 et 0, sinon le tableau ne comprendra pas le numéro d'index.
         let coordCol = parseInt(cell.id[0]); // on détermine grace à "cell", c'est à dire la case sur laquelle nous avons cliqué, l'index de la colonne, autrement dit, la deuxième dimension du tableau
         let coordRow = parseInt(cell.id[1]); // on détermine grace à "cell", l'index de la ligne, c'est à dire la première dimension du tableau
-        app.cellsList[coordRow][coordCol] = cell.innerText; //on remplace le "" qui était dans le tableau par le texte contenu dans la case cliquée : "X" ou "O"
+        app.cellsList[coordRow][coordCol] = cell.innerText; //on remplace le "" qui était dans le tableau par le texte contenu dans la case cliquée : "X" 
+        console.log(app.cellsList);
+        return [coordRow, coordCol];
     },
 
 
     iaTurn: function () { //cette fonction permet de faire jouer une case automatiquement, après l'action du joueur X
 
         let isEmpty = false; // booléen qui servira de condition de sortie pour la boucle while plus bas, on l'initialise à false (si une case est vide, la condition de sortie sera fausse)
+
         let randomRow = 0; //on initialise un futur nombre aléatoire ici et non dans la boucle while, pour pouvoir récuperer sa valeur après, celui ci sera le numéro de ligne
         let randomCol = 0; // comme au dessus, mais pour le numéro de case dans la ligne
 
 
-        while (!isEmpty) {
+        while (!isEmpty) { // tant qu'on ne trouve pas une case vide
             randomRow = app.randomNumber(); // on appelle une fonction qui crée un nombre aléatoire entre 0 et 3 ( 3 est exclu, donc réellement entre 0 et 2 inclus)
 
             randomCol = app.randomNumber(); // bah comme au dessus quoi
@@ -189,13 +197,250 @@ const app = {
             }
         }
 
-        app.cellsList[randomRow][randomCol] = "O"; // on inscrit "0" dans notre tableau
+        //premier tour pour X donc premier tour de l'IA, on joue au pif, qu'importe ce que joue X. Cette condition ne sera plus vérifiée dès le tour 3
+        if (app.turn <= 2) {
+            if (app.cellsList[randomRow][randomCol] == "") {
+                app.cellsList[randomRow][randomCol] = "O"; // on inscrit "0" dans notre tableau
+                app.writeDivAndArray(randomRow, randomCol); // on l'inscrit grace à cette fonction dans le HTML
+                return; // on stoppe la fonction
+            }
+        }
 
-        let divPlayedByIa = document.getElementById([randomCol] + "" + [randomRow]); //on choisit la div correspondante à la case du tableau, nous noterez que col et row sont inversé : notre tableau en HTML a une disposition differente que notre tableau JS;
+        for (let cursor = 0; cursor < 3; cursor++) { // on va boucler dans cellsList pour trouver les cases occupées par X ou O, si une case est vide a côté ou entre, O joue. "cursor" sera l'index à boucler : row pour checker sur les 3 lignes horizontales, col pour checker les trois colonnes
+
+            //chaque if fonctionne de la même manière : on check si 2 cases ont un X ou un O, et si une est vide : si elle est vide, on lui coller un O, pareil en html, et on stoppe la fonction pour que ce soit au tour de X;
+
+            //POUR FAIRE GAGNER O
+            //horizontal fin vide
+            if (app.cellsList[cursor][0] == "O" && app.cellsList[cursor][1] == "O" && app.cellsList[cursor][2] == "") {
+                app.cellsList[cursor][2] = "O"; // on valide donc la case en lui inscrivant "O"
+                app.writeDivAndArray(cursor, 2); // on inscrit O dans le html
+
+                return; // on stoppe
+            }
+            //horizontal milieu vide
+            if (app.cellsList[cursor][0] == "O" && app.cellsList[cursor][2] == "O" && app.cellsList[cursor][1] == "") {
+                app.cellsList[cursor][1] = "O";
+                app.writeDivAndArray(cursor, 1);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[cursor][1] == "O" && app.cellsList[cursor][2] == "O" && app.cellsList[cursor][0] == "") {
+                app.cellsList[cursor][0] = "O";
+                app.writeDivAndArray(cursor, 0);
+
+                return;
+            }
+            //vertical fin vide
+            if (app.cellsList[0][cursor] == "O" && app.cellsList[1][cursor] == "O" && app.cellsList[2][cursor] == "") {
+                app.cellsList[2][cursor] = "O";
+                app.writeDivAndArray(2, cursor);
+
+                return;
+            }
+            //horizontal milieu vide
+            if (app.cellsList[0][cursor] == "O" && app.cellsList[2][cursor] == "O" && app.cellsList[1][cursor] == "") {
+                app.cellsList[1][cursor] = "O";
+                app.writeDivAndArray(1, cursor);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[1][cursor] == "O" && app.cellsList[2][cursor] == "O" && app.cellsList[0][cursor] == "") {
+                app.cellsList[0][cursor] = "O";
+                app.writeDivAndArray(0, cursor);
+
+                return;
+            }
+
+
+
+
+            //POUR BLOQUER X DANS SON ELAN
+            //horizontal fin vide
+            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "") {
+                app.cellsList[cursor][2] = "O"; // on valide donc la case en lui inscrivant "O"
+                app.writeDivAndArray(cursor, 2); // on inscrit O dans le html
+
+                return; // on stoppe
+            }
+            //horizontal milieu vide
+            if (app.cellsList[cursor][0] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][1] == "") {
+                app.cellsList[cursor][1] = "O";
+                app.writeDivAndArray(cursor, 1);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[cursor][1] == "X" && app.cellsList[cursor][2] == "X" && app.cellsList[cursor][0] == "") {
+                app.cellsList[cursor][0] = "O";
+                app.writeDivAndArray(cursor, 0);
+
+                return;
+            }
+            //vertical fin vide
+            if (app.cellsList[0][cursor] == "X" && app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "") {
+                app.cellsList[2][cursor] = "O";
+                app.writeDivAndArray(2, cursor);
+
+                return;
+            }
+            //horizontal milieu vide
+            if (app.cellsList[0][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[1][cursor] == "") {
+                app.cellsList[1][cursor] = "O";
+                app.writeDivAndArray(1, cursor);
+
+                return;
+            }
+            //horizontal début vide
+            if (app.cellsList[1][cursor] == "X" && app.cellsList[2][cursor] == "X" && app.cellsList[0][cursor] == "") {
+                app.cellsList[0][cursor] = "O";
+                app.writeDivAndArray(0, cursor);
+
+                return;
+            }
+
+
+
+        }
+        //Plus besoin de la boucle : on check les diagonales
+
+        //ON FAIT GAGNER O
+        // diagonale haut gauche vers bas droite, bas vide
+        if ((app.cellsList[0][0] == "O" && app.cellsList[1][1] == "O") && app.cellsList[2][2] == "") {
+            app.cellsList[2][2] = "O";
+            row = 2;
+            col = 2;
+            app.writeDivAndArray(2, 2);
+
+            return;
+        }
+        //diagonale haut gauche vers bas droite, haut vide
+        if ((app.cellsList[1][1] == "O" && app.cellsList[2][2] == "O") && app.cellsList[0][0] == "") {
+            app.cellsList[0][0] = "O";
+            row = 0;
+            col = 0;
+            app.writeDivAndArray(0, 0);
+
+            return;
+        }
+        //diagonale haut gauche vers bas droite, vide milieu
+        if ((app.cellsList[0][0] == "O" && app.cellsList[2][0] == "O") && app.cellsList[1][1] == "") {
+            app.cellsList[1][1] = "O";
+            row = 1;
+            col = 1;
+            app.writeDivAndArray(1, 1);
+
+            return;
+        }
+        //diagonale bas gauche vers haut droite, haut vide
+        if ((app.cellsList[2][0] == "O" && app.cellsList[1][1] == "O") && app.cellsList[0][2] == "") {
+            app.cellsList[0][2] = "O";
+            row = 0;
+            col = 2;
+            app.writeDivAndArray(0, 2);
+
+            return;
+
+        }
+        //diagonale bas gauche vers haut droite, bas vide
+        if ((app.cellsList[0][2] == "O" && app.cellsList[1][1] == "O") && app.cellsList[2][0] == "") {
+            app.cellsList[2][0] = "O";
+            row = 2;
+            col = 0;
+            app.writeDivAndArray(2, 0);
+
+            return;
+
+        }
+        //diagonale bas gauche vers haut droite, vide milieu
+        if ((app.cellsList[2][0] == "O" && app.cellsList[0][2] == "O") && app.cellsList[1][1] == "") {
+            app.cellsList[1][1] = "O";
+            row = 1;
+            col = 1;
+            app.writeDivAndArray(1, 1);
+
+            return;
+        }
+
+
+        // ON BLOQUE X
+        // diagonale haut gauche vers bas droite, bas vide
+        if ((app.cellsList[0][0] == "X" && app.cellsList[1][1] == "X") && app.cellsList[2][2] == "") {
+            app.cellsList[2][2] = "O";
+            row = 2;
+            col = 2;
+            app.writeDivAndArray(2, 2);
+
+            return;
+        }
+        //diagonale haut gauche vers bas droite, haut vide
+        if ((app.cellsList[1][1] == "X" && app.cellsList[2][2] == "X") && app.cellsList[0][0] == "") {
+            app.cellsList[0][0] = "O";
+            row = 0;
+            col = 0;
+            app.writeDivAndArray(0, 0);
+
+            return;
+        }
+        //diagonale haut gauche vers bas droite, vide milieu
+        if ((app.cellsList[0][0] == "X" && app.cellsList[2][0] == "X") && app.cellsList[1][1] == "") {
+            app.cellsList[1][1] = "O";
+            row = 1;
+            col = 1;
+            app.writeDivAndArray(1, 1);
+
+            return;
+        }
+        //diagonale bas gauche vers haut droite, haut vide
+        if ((app.cellsList[2][0] == "X" && app.cellsList[1][1] == "X") && app.cellsList[0][2] == "") {
+            app.cellsList[0][2] = "O";
+            row = 0;
+            col = 2;
+            app.writeDivAndArray(0, 2);
+
+            return;
+
+        }
+        //diagonale bas gauche vers haut droite, bas vide
+        if ((app.cellsList[0][2] == "X" && app.cellsList[1][1] == "X") && app.cellsList[2][0] == "") {
+            app.cellsList[2][0] = "O";
+            row = 2;
+            col = 0;
+            app.writeDivAndArray(2, 0);
+
+            return;
+
+        }
+        //diagonale bas gauche vers haut droite, vide milieu
+        if ((app.cellsList[2][0] == "X" && app.cellsList[0][2] == "X") && app.cellsList[1][1] == "") {
+            app.cellsList[1][1] = "O";
+            row = 1;
+            col = 1;
+            app.writeDivAndArray(1, 1);
+
+            return;
+        }
+        // si on ne trouve rien de pertinent à jouer, on garde les valeurs aléatoire testés dans la boucle while 
+        if (isEmpty) { // si une case vide est trouvée ( revoir la boucle while)
+            app.cellsList[randomRow][randomCol] = "O"; // on inscrit dans le tableau à la case vide trouvée "O"
+            app.writeDivAndArray(randomRow, randomCol); // pareil dans le html
+
+            return; // on stoppe la fonction
+
+        }
+
+    },
+
+
+    writeDivAndArray: function (row, col) {
+        let divPlayedByIa = document.getElementById([col] + "" + [row]); //on choisit la div correspondante à la case du tableau, nous noterez que col et row sont inversé : notre tableau en HTML a une disposition differente que notre tableau JS;
 
         divPlayedByIa.textContent = "O"; // on inscrit un O dans notre div
         divPlayedByIa.classList.add("rowO"); // et on ajoute la classe "rowO" à celle-ci
 
+        console.log("O a joué " + col, row);
 
     },
 

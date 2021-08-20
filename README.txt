@@ -1,1 +1,1 @@
-Alors je vous le dis tout de suite, on est pas sur une IA qui cherche à gagner !
+Création d'un morpion avec IA qui cherchera à bloquer le joueur, et si possible gagner.
